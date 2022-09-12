@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Headers = ({ titles, currentTab, selectTab }) => {
   const handleClick = (e) => {
@@ -20,7 +20,7 @@ const Headers = ({ titles, currentTab, selectTab }) => {
       </li>
     );
   });
-  
+
   return (
     <ul className='tab-header'>
       {tabs}
@@ -28,30 +28,31 @@ const Headers = ({ titles, currentTab, selectTab }) => {
   );
 }
 
-class Folder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentTab: 0
-    };
+const Folder = ({folders}) => {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currentTab: 0
+  //   };
+  // }
+  const [currentTab, setCurrentTab] = useState(0)
+
+  function selectTab(num) {
+    setCurrentTab(num);
   }
-  
-  selectTab = (num) => {
-    this.setState({ currentTab: num });
-  }
-  
-  render() {
-    const folder = this.props.folders[this.state.currentTab];
-    const titles = this.props.folders.map((folder) => folder.title);
-    
+
+  // render() {
+    const folder = folders[currentTab];
+    const titles = folders.map((folder) => folder.title);
+
     return (
       <section className="tabs-section">
         <h1>Tabs</h1>
         <div className='tabs'>
           <Headers
             titles={titles}
-            currentTab={this.state.currentTab}
-            selectTab={this.selectTab}
+            currentTab={currentTab}
+            selectTab={selectTab}
           />
           <div className='tab-content'>
             {folder.content}
@@ -59,7 +60,6 @@ class Folder extends React.Component {
         </div>
       </section>
     );
-  }
 }
 
 export default Folder;
